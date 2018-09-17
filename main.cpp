@@ -127,11 +127,14 @@ void list<T>::deleteAtPosition(int position) {
 int main(int argc, const char * argv[]) {
     // insert code here...
     list<char> myList;
-    std::string input = "Computer Science";
+    
+    std::string input;
+    std::cout << "enter string input: " << std::endl;
+    getline(std::cin, input);
     for (int i = 0; i < input.length(); i++) {
         myList.add(input.at(i));
-        
     }
+    myList.print();
     int counter = myList.count();
     std::cout << counter << std::endl;
     int count = 0;
@@ -139,6 +142,8 @@ int main(int argc, const char * argv[]) {
         for (int i = 1; i < myList.count(); i += 1) {
             myList.deleteAtPosition(i);
         }
+        myList.print();
+        std::cout << "\n";
         counter = myList.count();
         count++;
     }
