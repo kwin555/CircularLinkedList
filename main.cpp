@@ -47,18 +47,22 @@ list<T>::list() {
 
 template <class T>
 void list<T>::add(T input) {
-    node<T> *current;
-    node<T> *newNode;
-    current = new node<T>;
-    current->data = input;
-    current->next = nullptr;
+    node<T> *newNode = new node<T>;
+    newNode = new node<T>;
+    newNode->data = input;
+    newNode->next = nullptr;
     if (head == nullptr) {
-        head = current;
+        head = newNode;
+        newNode->next = head;
     } else {
-        newNode->next = current;
+        node<T> *temp = head;
+        while(temp->next != head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next= head;
     }
-    newNode = current;
-    newNode->next = head;
+
 }
 
 template<class T>
@@ -68,11 +72,13 @@ void list<T>::print() {
     if (head == nullptr) {
         std::cout << "empty";
         return;
+    } else {
+        do {
+            std::cout << current->data;
+            current = current->next;
+        } while (current != head);
     }
-    do  {
-        std::cout << current->data << "";
-        current = current->next;
-    } while (current != head);
+    
 }
 
 template <class T>
@@ -80,6 +86,7 @@ int list<T>::count() {
     node<T> *current;
     current = head;
     int count = 0;
+
     if (head != nullptr) {
         do {
             current = current->next;
@@ -123,25 +130,27 @@ int main(int argc, const char * argv[]) {
     std::string input = "Computer Science";
     for (int i = 0; i < input.length(); i++) {
         myList.add(input.at(i));
-        myList.print();
         
     }
-    myList.print();
-    std::cout << "\n";
     int counter = myList.count();
     std::cout << counter << std::endl;
-    int count =0;
+    int count = 0;
     while(counter > 1) {
         for (int i = 1; i < myList.count(); i += 1) {
             myList.deleteAtPosition(i);
         }
         counter = myList.count();
         count++;
-        myList.print();
-        std::cout << "\n";
     }
     
+    if(counter == 1) {
+        myList.deleteAtPosition(0);
+        count++;
+    }
+    
+    myList.print();
     std::cout << "\n";
-    std::cout << "iterations " << count + 1 <<  std::endl;
+
+    std::cout << "iterations " << count <<  std::endl;
 
 }
